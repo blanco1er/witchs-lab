@@ -1,0 +1,124 @@
+- !<AssetImportMetadata/f2ae7ebc-333f-451e-8a28-ad1d320c1bdc>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> dcb32a77-58be-4e16-b2bd-ff134c2bee52
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> dcb32a77-58be-4e16-b2bd-ff134c2bee52
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 77730204-c3c8-49c8-9d99-5d309afc8429
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/77730204-c3c8-49c8-9d99-5d309afc8429>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 7a35945d-c3b7-42f7-8c9d-bbec1dacf778
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    alphaMaterial: false
+    ambBubbles: false
+    cameraObject: false
+    demoAutoplay: false
+    demoFreezeAt: false
+    glassMaterial: false
+    glowMaterial: false
+    liquidMaterial: false
+    paperMaterial: false
+    pbrMaterial: false
+    previewAnchor: false
+    previewYawDeg: false
+    sfxChime: false
+    sfxGrimoire: false
+    sfxPinch: false
+    sfxPlop: false
+    sfxPour: false
+    sfxRight: false
+    sfxSwirl: false
+    sfxToss: false
+    sfxWrong: false
+    tableDistanceCm: false
+    tableDropCm: false
+    uiFont: false
+    usePreviewAnchor: false
+    useWorldQuery: false
+    vertexMaterial: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      vertexMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      glassMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      liquidMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      alphaMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      glowMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      pbrMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      uiFont: !<reference.Font> 00000000-0000-0000-0000-000000000000
+      paperMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      tableDistanceCm: !<float> 68.000000
+      tableDropCm: !<float> 40.000000
+      useWorldQuery: true
+      usePreviewAnchor: true
+      previewAnchor: !<Vec3> {x: 2.000000, y: -144.000000, z: -292.000000}
+      previewYawDeg: !<float> 0.000000
+      demoAutoplay: false
+      demoFreezeAt: !<float> -1.000000
+      sfxPinch: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxPour: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxSwirl: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxToss: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxPlop: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxRight: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxWrong: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxChime: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      sfxGrimoire: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      ambBubbles: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - "// @input SceneObject cameraObject {\"hint\":\"The scene's Camera Object (world tracking).\"}"
+    - '// @input Asset.Material vertexMaterial {"hint":"Legacy flat vertex-colour material (fallback only)."}'
+    - '// @input Asset.Material glassMaterial {"hint":"WL_Glass"}'
+    - '// @input Asset.Material liquidMaterial {"hint":"WL_Liquid"}'
+    - '// @input Asset.Material alphaMaterial {"hint":"WL_VertexAlpha"}'
+    - '// @input Asset.Material glowMaterial {"hint":"WL_Glow"}'
+    - '// @input Asset.Material pbrMaterial {"hint":"WL_PBR_Vertex (Uber PBR, vertex colour = base colour)"}'
+    - '// @input Asset.Font uiFont {"hint":"UI font"}'
+    - '// @input Asset.Material paperMaterial {"hint":"WL_Paper (opaque unlit vertex colour, depth write)"}'
+    - '// @input float tableDistanceCm = 68 {"hint":"How far in front of you the table centre sits if no real surface is found (cm)."}'
+    - '// @input float tableDropCm = 32 {"hint":"How far below your eyes the table top sits if no real surface is found (cm)."}'
+    - '// @input bool useWorldQuery = true {"hint":"Look for a real table with World Query and set the lab on it."}'
+    - '// @input bool usePreviewAnchor = true {"hint":"Lens Studio only: World Query gets no hit in the simulated rooms, so stage the lab on this surface point (world cm). Ignored on Specs."}'
+    - '// @input vec3 previewAnchor = {2,-144,-292} {"hint":"Surface point in the Preview room (Sunlit Room coffee table top)."}'
+    - '// @input float previewYawDeg {"hint":"Yaw of the lab on the preview anchor (degrees, 0 = facing +Z)."}'
+    - '// @input bool demoAutoplay {"hint":"Capture helper (off by default): plays the whole run by itself, same events as the pinches."}'
+    - "// @input float demoFreezeAt = -1 {\"hint\":\"Capture helper: freeze the lab's animation clock at this many seconds after start (-1 = never).\"}"
+    - // @input Asset.AudioTrackAsset sfxPinch
+    - // @input Asset.AudioTrackAsset sfxPour
+    - // @input Asset.AudioTrackAsset sfxSwirl
+    - // @input Asset.AudioTrackAsset sfxToss
+    - // @input Asset.AudioTrackAsset sfxPlop
+    - // @input Asset.AudioTrackAsset sfxRight
+    - // @input Asset.AudioTrackAsset sfxWrong
+    - // @input Asset.AudioTrackAsset sfxChime
+    - // @input Asset.AudioTrackAsset sfxGrimoire
+    - // @input Asset.AudioTrackAsset ambBubbles

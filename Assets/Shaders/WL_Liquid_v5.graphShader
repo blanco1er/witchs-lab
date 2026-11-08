@@ -1,0 +1,194 @@
+SchemaVersion: 1
+Nodes:
+  ChildNodes:
+    Node0:
+      DependencyIndex: 0
+      LevelID: 0
+      NodeCount: 0
+      NodeType: 1
+      Ports:
+        Code:
+          ClassType1: TEXT
+          String: |-
+            // Witch's Lab liquid (premultiplied alpha). Vertex colour rgb = liquid colour
+            // (rewritten by script during the reveal diffusion), a = height in the glass 0..1.
+            output_vec4 result;
+
+            // ---- Witch's Lab shared lighting: a bright kitchen "studio" in world space.
+            // Two tall window strips behind the viewer + a soft ceiling light, a warm
+            // floor bounce. Used for every reflection so glass, liquid and metal agree.
+            vec3 wlStudio(vec3 R)
+            {
+                float up = R.y;
+                vec3 sky = mix(vec3(0.10, 0.09, 0.08), vec3(0.40, 0.39, 0.37), smoothstep(-0.35, 0.85, up));
+                float az = atan(R.x, R.z);
+                // window strips only reflect on near-vertical walls: no unstable azimuth near the zenith
+                float band = smoothstep(-0.15, 0.10, up) * (1.0 - smoothstep(0.32, 0.55, up));
+                float s1 = (1.0 - smoothstep(0.035, 0.11, abs(az + 0.62))) * band;
+                float s2 = (1.0 - smoothstep(0.02, 0.06, abs(az - 0.78))) * band;
+                float s3 = (1.0 - smoothstep(0.05, 0.16, abs(abs(az) - 2.6))) * band * 0.5;
+                float top = smoothstep(0.80, 0.97, up);
+                return sky + vec3(1.0, 0.92, 0.80) * (s1 * 1.5 + s2 * 0.55 + s3 * 0.4 + top * 0.45);
+            }
+            float wlLuma(vec3 c) { return dot(c, vec3(0.299, 0.587, 0.114)); }
+            float wlHash(vec3 p)
+            {
+                p = fract(p * 0.3183099 + vec3(0.1, 0.2, 0.3));
+                p *= 17.0;
+                return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+            }
+            float wlNoise(vec3 x)
+            {
+                vec3 i = floor(x);
+                vec3 f = fract(x);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(mix(wlHash(i + vec3(0.0, 0.0, 0.0)), wlHash(i + vec3(1.0, 0.0, 0.0)), f.x),
+                               mix(wlHash(i + vec3(0.0, 1.0, 0.0)), wlHash(i + vec3(1.0, 1.0, 0.0)), f.x), f.y),
+                           mix(mix(wlHash(i + vec3(0.0, 0.0, 1.0)), wlHash(i + vec3(1.0, 0.0, 1.0)), f.x),
+                               mix(wlHash(i + vec3(0.0, 1.0, 1.0)), wlHash(i + vec3(1.0, 1.0, 1.0)), f.x), f.y), f.z);
+            }
+
+            // soft shoulder: highlights roll off instead of clipping to pure white
+            vec3 wlTone(vec3 c) { return c * (1.0 + c * 0.12) / (1.0 + c); }
+
+            void main()
+            {
+                vec3 P = system.getSurfacePositionWorldSpace();
+                vec3 N = normalize(system.getSurfaceNormalWorldSpace());
+                vec3 V = normalize(system.getCameraPosition() - P);
+                vec4 vc = system.getSurfaceColor();
+                float h = clamp(vc.a, 0.0, 1.0);
+                float ndv = clamp(abs(dot(N, V)), 0.0, 1.0);
+                float F = 0.02 + 0.98 * pow(1.0 - ndv, 5.0);
+                float t = system.getTimeElapsed();
+                float isTop = smoothstep(0.55, 0.85, N.y);
+                vec3 base = vc.rgb;
+                // depth: denser and more saturated at the bottom and through the middle of the glass
+                float depth = clamp(ndv * 0.6 + (1.0 - h) * 0.4, 0.0, 1.0);
+                vec3 sat = pow(base, vec3(1.35));
+                vec3 deep = sat * 0.62;
+                vec3 thin = mix(base, vec3(1.0), 0.06) * 1.05;
+                vec3 col = mix(thin, deep, depth);
+                // light scattering inside: a soft glow along the rims and just under the surface
+                col += base * (pow(1.0 - ndv, 2.0) * 0.14 + smoothstep(0.75, 1.0, h) * 0.04);
+                // slow internal drift so the potion never looks painted
+                float n = wlNoise(P * 0.55 + vec3(0.0, t * 0.25, t * 0.1));
+                col *= 0.9 + n * 0.2;
+                // the surface: a touch lighter, with a moving shimmer
+                float sh = wlNoise(vec3(P.x * 1.4 + t * 0.6, 0.0, P.z * 1.4 - t * 0.4));
+                col = mix(col, base * 0.95 + vec3(sh * 0.05), isTop * 0.6);
+                vec3 R = reflect(-V, N);
+                col *= 0.97;
+                vec3 spec = wlTone(wlStudio(R) * F * mix(0.7, 1.1, isTop));
+                float a = mix(0.92, 0.85, isTop);
+                result = vec4(wlTone(col) * a * 1.12 + spec, clamp(a + wlLuma(spec) * 0.3, 0.0, 1.0));
+            }
+        CustomCodeNodeAsset:
+          ClassType1: REFUID
+          String: ""
+        Description:
+          ClassType1: TEXT
+          String: ""
+        Examples:
+          ItemIndex: 0
+          ItemList: "Custom : Input/Output/Global Types : Extra Functions : Procedural Execution : Lighting Loop : System Built-In Values/Functions"
+        ID:
+          Variable: 0
+        Locked:
+          Variable: false
+        Stage:
+          ItemIndex: 1
+          ItemList: "Vertex : Pixel"
+        Title:
+          String: WL_Liquid_v5
+        UseExternalFile:
+          Variable: false
+        ngs_Height:
+          Variable: 400
+        ngs_Version:
+          String: 0.1.0
+        result:
+          IOType: 1
+          Variable: [0.0, 0.0, 0.0, 0.0]
+      PositionX: -59
+      PositionY: 91
+      TemplateID: node_util_custom
+      TemplateVersionMinor: 2
+      Title1: Custom Code
+    Node1:
+      CommentSizeX: 0
+      CommentSizeY: 0
+      DependencyIndex: 1
+      LevelID: 4
+      NodeCount: 0
+      NodeType: 1
+      Ports:
+        Depth:
+          Variable: 1.0
+        DepthMode:
+          ItemIndex: 0
+          ItemList: "Non-Linear - Normalized [0 to 1] : Linear - Normalized [-1 to 1] : View Space - Non-Normalized [-near to -far]"
+        DontFreezeSpec:
+          Variable: false
+        FinalColor:
+          ClassType1: COLOR
+          Connection0:
+            NodeLevelID: 0
+            PortID: result
+          Variable: [1.0, 1.0, 1.0, 1.0]
+        FinalColor1:
+          ClassType1: COLOR
+          Variable: [1.0, 1.0, 1.0, 1.0]
+        FinalColor2:
+          ClassType1: COLOR
+          Variable: [1.0, 1.0, 1.0, 1.0]
+        FinalColor3:
+          ClassType1: COLOR
+          Variable: [1.0, 1.0, 1.0, 1.0]
+        GSplatPointSize:
+          Variable: 0.0
+        GSplatRotation:
+          Variable: [0.0, 0.0, 0.0, 1.0]
+        GSplatScale:
+          Variable: [0.0, 0.0, 0.0]
+        Motion Vector Pass:
+          ItemIndex: 0
+          ItemList: "Write Velocity and Depth : Discard Velocity but Write Depth : Discard Velocity and Depth"
+        Negative:
+          Variable: false
+        PrevWorldPosition:
+          Variable: [0.0, 0.0, 0.0]
+        RayDirection:
+          Variable: [0.0, 1.0, 0.0]
+        RayOrigin:
+          Variable: [0.0, 0.0, 0.0]
+        ShowPrevPos:
+          Variable: false
+        Targets:
+          ItemIndex: 0
+          ItemList: "1 : 2 : 3 : 4"
+        Type:
+          ItemIndex: 0
+          ItemList: "3D : Post Effect : Hair : Gaussian Splatting"
+        WorldNormal:
+          Variable: [0.0, 1.0, 0.0]
+        WorldPosition:
+          Variable: [0.0, 0.0, 0.0]
+        WorldTangent:
+          Variable: [0.0, 0.0, 1.0]
+        WriteDepth:
+          Variable: false
+      PositionX: 220
+      PositionY: 90
+      TemplateID: nodes_main_graph
+      Title1: Shader
+      Title2: 3D
+  IsSubGraph0: true
+  IsSubGraph1: true
+  LevelID: 0
+  NodeType: 3
+  PositionX: 0
+  PositionY: 0
+  TemplateID: nodes_main_subgraph
+  Title1: ""
+SystemID: dev.snap.shaders

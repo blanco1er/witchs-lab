@@ -1,0 +1,52 @@
+- !<AssetImportMetadata/cf7b462f-a6d8-4c05-8be3-9ddb36848184>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 6e31feb9-0652-420e-a93f-ca9f25faf59d
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 6e31feb9-0652-420e-a93f-ca9f25faf59d
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f353c12b-b0ab-4fee-87f2-7cacfc1e94a1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f353c12b-b0ab-4fee-87f2-7cacfc1e94a1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 27340a96-37aa-414c-9d56-7805df9ff91d
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    font: false
+    panelMaterial: false
+    readingDistanceCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - readingDistanceCm: !<float> 70.000000
+      panelMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      font: !<reference.Font> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float readingDistanceCm = 70 {"hint":"Distance (cm) the card is designed to be read from; scales the type."}'
+    - '// @input Asset.Material panelMaterial {"hint":"Transparent vertex-colour material (WL_VertexAlpha)."}'
+    - // @input Asset.Font font

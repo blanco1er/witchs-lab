@@ -1,0 +1,14 @@
+# Never publish the MCP token, caches or local editor state
+.mcp.json
+ls-live-instance.json
+ls-live-instance.json.tmp
+Cache/
+Workspaces/
+PluginsUserPreferences/
+Support/
+.virtual-scene*.json
+*.lock
+.DS_Store
+
+# Local font previews
+.font_tmp/

@@ -1,0 +1,55 @@
+- !<AssetImportMetadata/697174c3-cd5a-44ce-b6f3-aeed99f1ae26>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 4dd87479-53ad-4474-8a9d-4d80fb57c087
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 4dd87479-53ad-4474-8a9d-4d80fb57c087
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 750df58c-bc86-456f-b5f8-ad454924620c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/750df58c-bc86-456f-b5f8-ad454924620c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: fe87954c-7fa4-4a3d-a2a6-b0913d605343
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    font: false
+    paperMaterial: false
+    pbrMaterial: false
+    readingDistanceCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - pbrMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      paperMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      font: !<reference.Font> 00000000-0000-0000-0000-000000000000
+      readingDistanceCm: !<float> 75.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material pbrMaterial {"hint":"PBR vertex-colour material (WL_PBR_Vertex), cloned for leather, paper and brass."}'
+    - '// @input Asset.Material paperMaterial {"hint":"Unlit vertex-colour material for paper and ink (WL_VertexAlpha): pages read the same on both sides."}'
+    - // @input Asset.Font font
+    - // @input float readingDistanceCm = 75
